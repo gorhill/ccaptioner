@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CCaptioner</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="menu">
+    <div id="assignCaptions" class="menu-item">Assign text track to...
+        <div>Click or hover the target video element.</div>
+    </div>
+    <div id="extraControls" style="display:none;">
+        <hr>
+        <div class="menu-item">Time offset:
+            <span id="shiftValue">0s</span>
+        </div>
+        <div id="shiftCaptions">
+            <span id="sub10Sec">&minus;10s</span>
+            <span id="sub1Sec">&minus;1s</span>
+            <span id="reset0Sec">0</span>
+            <span id="add1Sec">&plus;1s</span>
+            <span id="add10Sec">&plus;10s</span>
+        </div>
+    </div>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>

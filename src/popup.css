@@ -1,0 +1,65 @@
+body {
+    font: 16px sans-serif;
+    margin: 0;
+    padding: 0;
+    }
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    }
+
+.menu hr {
+    margin: 0.5em 0;
+    border: 0;
+    border-top: 1px solid #ccc;
+    }
+
+.menu-item {
+    cursor: pointer;
+    padding: 1em 2em 1em 1em;
+    white-space: nowrap;
+    }
+.menu-item:hover {
+    background-color: aliceblue;
+    }
+.menu-item > div {
+    color: #444;
+    display: none;
+    font-size: small;
+    padding: 0.5em 0 0.5em 1em;
+    }
+
+body.assignCaptions,
+body.removeCaptions {
+    pointer-events: none;
+    }
+
+body.assignCaptions #assignCaptions,
+body.removeCaptions #removeCaptions {
+    background-color: aliceblue;
+    }
+
+body.assignCaptions .menu-item:not(#assignCaptions),
+body.removeCaptions .menu-item:not(#removeCaptions) {
+    color: gray;
+    }
+
+body.assignCaptions #assignCaptions > div,
+body.removeCaptions #removeCaptions > div {
+    display: block;
+    }
+
+#shiftCaptions {
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+    }
+#shiftCaptions > span {
+    cursor: pointer;
+    padding: 1em;
+    }
+#shiftCaptions > span:hover {
+    background-color: aliceblue;
+    }

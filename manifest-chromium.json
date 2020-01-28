@@ -1,0 +1,21 @@
+{
+  "author": "Raymond Hill",
+  "browser_action": {
+    "default_icon": {
+      "64": "icon-64.png"
+    },
+    "default_title": "CCaptioner",
+    "default_popup": "popup.html"
+  },
+  "description": "Assign your own text track to a video element in a web page",
+  "icons": {
+    "64": "icon-64.png"
+  },
+  "manifest_version": 2,
+  "name": "CCaptioner",
+  "permissions": [
+    "activeTab",
+    "<all_urls>"
+  ],
+  "version": "1.0.0"
+}
