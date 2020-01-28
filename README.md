@@ -4,6 +4,8 @@ A very simple extension which purpose is to assign a text track to a [HTML5
 `video` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)
 in a web page.
 
+![ccaptioner's popup panel](https://user-images.githubusercontent.com/585534/73291383-10413a00-41ce-11ea-9cbd-25ab7be7802d.png)
+
 Many HTML5 video players do not offer the ability to import text track for
 captions/subtitles purpose. The purpose of this extension is to remediate
 this problem.
