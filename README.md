@@ -30,6 +30,20 @@ Once a text track has been assigned to a video element on a given page, you
 can time-shift the text track through CCaptioner's popup panel -- this is
 useful when the text track is not well synchronized with the video content.
 
+***
+
+### Install
+
+#### Firefox 68 and above
+
+Firefox's AMO: <https://addons.mozilla.org/firefox/addon/ccaptioner/>.
+
+#### Chromium
+
+Install from the [Releases section](https://github.com/gorhill/ccaptioner/releases). I _may_ end up publishing it in the Chrome Web Store.
+
+***
+
 ### Permissions
 
 #### `activeTab`
