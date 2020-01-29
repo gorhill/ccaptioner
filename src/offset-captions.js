@@ -53,12 +53,12 @@
 
     for ( let i = 0; i < entries.length; i++ ) {
         const lines = entries[i].split(/\n/);
-        const times = /(\S+) --> (\S+)/.exec(lines[1]);
+        const times = /(\S+) --> (\S+)/.exec(lines[0]);
         if ( times === null ) { continue; }
         const t0 = timeShift(times[1]);
         if ( t0 === '' ) { return; }
         const t1 = timeShift(times[2]);
-        lines[1] = `${t0} --> ${t1}`;
+        lines[0] = `${t0} --> ${t1}`;
         entries[i] = lines.join('\n');
     }
     vtt = entries.join('\n\n');
@@ -66,6 +66,7 @@
     const blob = new Blob([ vtt ], { type: 'text/vtt' });
     const blobURL = URL.createObjectURL(blob);
     const newTrack = oldTrack.cloneNode(false);
+    newTrack.setAttribute('data-vtt-offset', timeDelta);
     newTrack.setAttribute('src', blobURL);
     oldTrack.replaceWith(newTrack);
     newTrack.track.mode = 'showing';

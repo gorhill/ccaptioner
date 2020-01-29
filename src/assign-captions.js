@@ -104,20 +104,26 @@
         video.pause();
     };
 
+    // https://en.wikipedia.org/wiki/WebVTT#Main_differences_from_SubRip
+
     const srtParse = function(raw) {
         const vtt = [ 'WEBVTT', '' ];
         const entries = raw.replace(/(\r\n|\n\r)/g, '\n')
                            .trim()
                            .split(/\s*\n\n+\s*/);
         for ( const entry of entries ) {
+            let i = 0;
             const lines = entry.split(/\s*\n\s*/);
-            if ( /^\d+$/.test(lines[0]) === false ) { continue; }
-            const times = /(\S+)\s+--+>\s+(\S+)/.exec(lines[1]);
+            // "The frame numbering/identification preceding the
+            // "timecode is optional"
+            if ( /^\d+$/.test(lines[i+0]) ) {
+                i += 1;
+            }
+            const times = /^(\S+)\s+--+>\s+(\S+)/.exec(lines[i+0]);
             if ( times === null ) { continue; }
             vtt.push(
-                lines[0],
                 times[1].replace(/,/g, '.') + ' --> ' + times[2].replace(/,/g, '.'),
-                lines.slice(2).join('\n'),
+                lines.slice(i+1).join('\n'),
                 ''
             );
         }
@@ -136,7 +142,7 @@
         track.setAttribute('label', 'CCaptioner');
         track.setAttribute('srclang', 'zz');
         track.setAttribute('src', blobURL);
-        track.setAttribute('data-vtt-delta', '0');
+        track.setAttribute('data-vtt-offset', '0');
         track.setAttribute('data-vtt', vtt);
         video.appendChild(track);
         track.track.mode = 'showing';
