@@ -29,24 +29,26 @@
     const oldTrack = document.querySelector('video > track[label="CCaptioner"][data-vtt]');
     if ( oldTrack === null ) { return; }
 
-    const timeDelta = parseInt(oldTrack.getAttribute('data-vtt-offset') || '0', 10);
+    const timeDelta = parseFloat(oldTrack.getAttribute('data-vtt-offset') || '0');
 
     let vtt = oldTrack.getAttribute('data-vtt');
     if ( typeof vtt !== 'string' || vtt === '' ) { return; }
 
     const timeShift = function(timecode) {
-        const fields = /(\d+):(\d+):(\d+).(\d+)/.exec(timecode);
+        const fields = /(\d+):(\d+):(\d+)\.(\d+)/.exec(timecode);
         let seconds = parseInt(fields[1], 10) * 3600 +
                       parseInt(fields[2], 10) *   60 +
                       parseInt(fields[3], 10) *    1 +
+                      parseInt(fields[4], 10) / 1000 +
                       timeDelta;
         if ( seconds < 0 ) { return '00:00:00.000'; }
         const hh = Math.floor(seconds / 3600).toString().padStart(2, '0');
         seconds %= 3600;
         const mm = Math.floor(seconds / 60).toString().padStart(2, '0');
         seconds %= 60;
-        const ss = seconds.toString().padStart(2, '0');
-        return `${hh}:${mm}:${ss}.${fields[4]}`;
+        const ss = Math.trunc(seconds).toString().padStart(2, '0');
+        const ms = ((seconds - Math.trunc(seconds)) * 1000).toFixed(0).padStart(3, '0');
+        return `${hh}:${mm}:${ss}.${ms}`;
     };
 
     const entries = vtt.trim().split(/\n\n/);

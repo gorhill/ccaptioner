@@ -22,7 +22,7 @@
 'use strict';
 
 (( ) => {
-    const track = document.querySelector('video > track[label="CCaptioner"][data-vtt]');
+    const track = document.querySelector('video > track[label="CCaptioner"][data-vtt-offset]');
     if ( track === null ) { return; }
-    return parseFloat(track.getAttribute('data-vtt-offset') || '0') || 0;
+    return parseFloat(track.getAttribute('data-vtt-offset')) || 0;
 })();

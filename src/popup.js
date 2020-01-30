@@ -28,7 +28,7 @@
         let timeDelta = parseFloat('$0') || 0;
         const track = document.querySelector('video > track[label="CCaptioner"][data-vtt]');
         if ( track === null ) { return; }
-        timeDelta += parseInt(track.getAttribute('data-vtt-offset') || '0', 10);
+        timeDelta += parseFloat(track.getAttribute('data-vtt-offset') || '0');
         track.setAttribute('data-vtt-offset', timeDelta);
     };
 
@@ -71,8 +71,8 @@
             if ( val === undefined ) { return; }
             document.querySelector('#extraControls').style.display = 'block';
             let text = '0';
-            if ( val > 0 ) { text = `+${val}s`; }
-            else if ( val < 0 ) { text = `${val}s`.replace('-', '\u2212'); }
+            if ( val > 0 ) { text = `+${val}`; }
+            else if ( val < 0 ) { text = `${val}`.replace('-', '\u2212'); }
             document.querySelector('#shiftValue').textContent = text;
         });
     };
@@ -93,38 +93,26 @@
         { once: true }
     );
 
-    document.querySelector('#sub10Sec').addEventListener(
+    document.querySelector('#offsetCaptions').addEventListener(
         'click',
-        ( ) => {
-            injectScriptCode(makeContentScript(timeShiftContentScript, -10));
+        ev => {
+            const button = ev.target;
+            if ( button.hasAttribute('data-offset') === false ) { return; }
+            injectScriptCode(
+                makeContentScript(
+                    timeShiftContentScript,
+                    button.getAttribute('data-offset')
+                )
+            );
             injectScriptFile('offset-captions', updateTimeOffset);
         }
     );
-    document.querySelector('#sub1Sec').addEventListener(
-        'click',
-        ( ) => {
-            injectScriptCode(makeContentScript(timeShiftContentScript, -1));
-            injectScriptFile('offset-captions', updateTimeOffset);
-        }
-    );
+
+
     document.querySelector('#reset0Sec').addEventListener(
         'click',
         ( ) => {
             injectScriptCode(makeContentScript(timeSetContentScript, 0));
-            injectScriptFile('offset-captions', updateTimeOffset);
-        }
-    );
-    document.querySelector('#add1Sec').addEventListener(
-        'click',
-        ( ) => {
-            injectScriptCode(makeContentScript(timeShiftContentScript, 1));
-            injectScriptFile('offset-captions', updateTimeOffset);
-        }
-    );
-    document.querySelector('#add10Sec').addEventListener(
-        'click',
-        ( ) => {
-            injectScriptCode(makeContentScript(timeShiftContentScript, 10));
             injectScriptFile('offset-captions', updateTimeOffset);
         }
     );

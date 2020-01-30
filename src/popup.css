@@ -51,15 +51,15 @@ body.removeCaptions #removeCaptions > div {
     display: block;
     }
 
-#shiftCaptions {
+#offsetCaptions {
     display: flex;
     justify-content: space-between;
     user-select: none;
     }
-#shiftCaptions > span {
+#offsetCaptions > span {
     cursor: pointer;
-    padding: 1em;
+    padding: 1em 0.75em;
     }
-#shiftCaptions > span:hover {
+#offsetCaptions > span:hover {
     background-color: aliceblue;
     }

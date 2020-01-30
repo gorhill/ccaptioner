@@ -104,7 +104,26 @@
         video.pause();
     };
 
-    // https://en.wikipedia.org/wiki/WebVTT#Main_differences_from_SubRip
+    // <https://www.w3.org/TR/webvtt1/>, excerpts:
+    //
+    // - Timecode hours are optional
+    //
+    // - The frame numbering/identification preceding the timecode is
+    //   optional
+    //
+    // - Comments are just blocks that are preceded by a blank line, start
+    //   with the word "NOTE" (followed by a space or newline), and end
+    //   at the first blank line.
+
+    const tcodeParse = function(timecode) {
+        const fields = /(\d+:)?(\d+:\d+)([\.,])(\d+)/.exec(timecode);
+        if ( fields === null ) { return ''; }
+        if ( typeof fields[1] !== 'string' ) {
+            fields[1] = '00:';
+        }
+        fields[3] = '.';
+        return fields.slice(1).join('');
+    };
 
     const srtParse = function(raw) {
         const vtt = [ 'WEBVTT', '' ];
@@ -114,16 +133,15 @@
         for ( const entry of entries ) {
             let i = 0;
             const lines = entry.split(/\s*\n\s*/);
-            // "The frame numbering/identification preceding the
-            // "timecode is optional"
-            if ( /^\d+$/.test(lines[i+0]) ) {
-                i += 1;
-            }
+            if ( /^\d+$/.test(lines[i+0]) ) { i += 1; }
             const times = /^(\S+)\s+--+>\s+(\S+)/.exec(lines[i+0]);
             if ( times === null ) { continue; }
+            const t0 = tcodeParse(times[1]);
+            const t1 = tcodeParse(times[2]);
+            if ( t0 === '' || t1 === '' ) { continue; }
             vtt.push(
-                times[1].replace(/,/g, '.') + ' --> ' + times[2].replace(/,/g, '.'),
-                lines.slice(i+1).join('\n'),
+                `${t0} --> ${t1}`,
+                ...lines.slice(i+1),
                 ''
             );
         }

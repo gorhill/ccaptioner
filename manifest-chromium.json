@@ -7,7 +7,7 @@
     "default_title": "CCaptioner",
     "default_popup": "popup.html"
   },
-  "description": "Assign your own text track to a video element in a web page",
+  "description": "Assign a text track to a video element in a web page",
   "icons": {
     "64": "icon-64.png"
   },

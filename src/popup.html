@@ -13,14 +13,16 @@
     <div id="extraControls" style="display:none;">
         <hr>
         <div class="menu-item">Time offset:
-            <span id="shiftValue">0s</span>
+            <span id="shiftValue">0</span> seconds
         </div>
-        <div id="shiftCaptions">
-            <span id="sub10Sec">&minus;10s</span>
-            <span id="sub1Sec">&minus;1s</span>
+        <div id="offsetCaptions">
+            <span data-offset="-10">&minus;10</span>
+            <span data-offset="-1">&minus;1</span>
+            <span data-offset="-0.25">&minus;&frac14;</span>
             <span id="reset0Sec">0</span>
-            <span id="add1Sec">&plus;1s</span>
-            <span id="add10Sec">&plus;10s</span>
+            <span data-offset="0.25">&plus;&frac14;</span>
+            <span data-offset="1">&plus;1</span>
+            <span data-offset="10">&plus;10</span>
         </div>
     </div>
 </div>
