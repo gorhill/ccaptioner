@@ -40,7 +40,11 @@ Firefox's AMO: <https://addons.mozilla.org/firefox/addon/ccaptioner/>.
 
 #### Chromium
 
-Install from the [Releases section](https://github.com/gorhill/ccaptioner/releases). I _may_ end up publishing it in the Chrome Web Store.
+Chrome Web Store: <https://chrome.google.com/webstore/detail/ccaptioner/lckmkmkmghpklkkbfhhfgalajdnjcnbn>.
+
+#### Sideloading
+
+You can sideload the extension by downloading the appropriate package from the [Releases section](https://github.com/gorhill/ccaptioner/releases).
 
 ***
 
