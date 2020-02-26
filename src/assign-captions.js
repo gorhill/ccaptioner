@@ -97,7 +97,7 @@
             fr.onload = ( ) => {
                 srtInstall(video, srtParse(fr.result));
             };
-            fr.readAsText(file);
+            fr.readAsArrayBuffer(file);
         });
 
         input.click();
@@ -125,7 +125,33 @@
         return fields.slice(1).join('');
     };
 
-    const srtParse = function(raw) {
+    // https://github.com/gorhill/ccaptioner/issues/3
+    //   For now support some of the most common encodings, as per:
+    //   https://w3techs.com/technologies/history_overview/character_encoding
+    const textDecode = function(buffer) {
+        const encodings = [
+            'utf-8',
+            'iso-8859-1',
+            'Windows-1251',
+            'shift-jis',
+            'gbk',
+            'euc-kr',
+            'iso-8859-9',
+            'iso-8859-2',
+        ];
+        for ( const encoding of encodings ) {
+            try {
+                const decoder = new TextDecoder(encoding, { fatal: true });
+                return decoder.decode(buffer);
+            } catch (ex) {
+            }
+        }
+        return '';
+    };
+
+    const srtParse = function(buffer) {
+        const raw = textDecode(buffer);
+        if ( raw === '' ) { return ''; }
         const vtt = [ 'WEBVTT', '' ];
         const entries = raw.replace(/(\r\n|\n\r)/g, '\n')
                            .trim()
@@ -149,6 +175,7 @@
     };
 
     const srtInstall = function(video, vtt) {
+        if ( vtt === '' ) { return; }
         for ( const elem of video.querySelectorAll('track') ) {
             elem.remove();
         }
