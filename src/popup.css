@@ -63,3 +63,18 @@ body.removeCaptions #removeCaptions > div {
 #offsetCaptions > span:hover {
     background-color: aliceblue;
     }
+    
+#lineCaptions {
+    display: flex;
+    justify-content: space-evenly;
+    user-select: none;
+    }
+#lineCaptions > span {
+    cursor: pointer;
+    padding: 1em 0.75em;
+    }
+#lineCaptions > span:hover {
+    background-color: aliceblue;
+    }
+    
+    
