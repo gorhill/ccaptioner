@@ -30,6 +30,7 @@
         if ( track === null ) { return; }
         timeDelta += parseFloat(track.getAttribute('data-vtt-offset') || '0');
         track.setAttribute('data-vtt-offset', timeDelta);
+        track.setAttribute('lineOffset',-1)
     };
 
     const timeSetContentScript = function() {
@@ -37,7 +38,22 @@
         const track = document.querySelector('video > track[label="CCaptioner"][data-vtt]');
         if ( track === null ) { return; }
         track.setAttribute('data-vtt-offset', timeDelta);
+        track.setAttribute('lineOffset',-1)
     };
+    
+    const lineShiftContentScript = function() {
+        let lineDelta = parseFloat('$0') || 0;
+        const track = document.querySelector('video > track[label="CCaptioner"][data-vtt]');
+        if ( track === null ) { return; }
+        if (!track.hasAttribute('lineOffset')) {track.setAttribute('lineOffset',-1)} 
+        lineDelta += parseFloat(track.getAttribute('lineOffset') || '0')
+        track.setAttribute('lineOffset', lineDelta)
+
+        for (const cue of track.track.cues) {
+            cue.line = lineDelta
+        }
+    };
+    
 
     const makeContentScript = function(fn, ...args) {
         let code = [ '(', fn.toString(), ')();', ].join('\n');
@@ -108,6 +124,21 @@
         }
     );
 
+    document.querySelector('#lineCaptions').addEventListener(
+        'click',
+        ev => {
+            const button = ev.target;
+            if (button.hasAttribute('line-offset') === false) {return; }
+            injectScriptCode(
+                makeContentScript(
+                    lineShiftContentScript,
+                    button.getAttribute('line-offset')
+                )
+            );
+            
+        
+        }
+    );
 
     document.querySelector('#reset0Sec').addEventListener(
         'click',
