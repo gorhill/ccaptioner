@@ -1,5 +1,9 @@
 ## CCaptioner
 
+Important note: Don't use this project, it's unmaintained and not working very well. I suggest you instead use [FastStream video player](https://github.com/Andrews54757/FastStream), you can easily search/add/sync caption with it.
+
+---
+
 A very simple extension which purpose is to assign a text track to a [HTML5
 `video` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)
 in a web page.
